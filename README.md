@@ -16,7 +16,7 @@ O pacote não inclui Node.js ou Claude Code. Sem um runtime compatível, não h�
 Após publicar este repositório no seu Git, cada integrante executa, substituindo a URL:
 
 ```bash
-claude plugin marketplace add https://SEU-HOST/SEU-USUARIO/token-saver.git
+claude plugin marketplace add https://github.com/daniilooo/token-saver.git
 claude plugin install token-saver@danilo-tools
 ```
 
@@ -110,20 +110,7 @@ claude plugin validate .
 claude plugin validate ./plugins/token-saver
 ```
 
-CI incluída para Linux, macOS e Windows, com Node 20/22/24. Veja [manual](docs/MANUAL.md), [arquitetura](docs/ARCHITECTURE.md) e [contribuição](CONTRIBUTING.md).
-
-Para publicar em um repositório vazio que você criou:
-
-```bash
-git init
-git add .
-git commit -m "feat: initial token saver plugin"
-git branch -M main
-git remote add origin https://SEU-HOST/SEU-USUARIO/token-saver.git
-git push -u origin main
-```
-
-Revise o código, rode o piloto descrito no manual e crie uma tag após validá-lo. Para atualizações, incremente a versão em `plugin.json` e `package.json`; o time atualiza o marketplace/plugin pelos comandos disponíveis em `/plugin`.
+CI incluída para Linux, macOS e Windows, com Node 20/22/24. Veja [manual](docs/MANUAL.md), [arquitetura](docs/ARCHITECTURE.md) e [contribuição](CONTRIBUTING.md)
 
 Licença MIT. Autor: Danilo Franco.
 
