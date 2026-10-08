@@ -1,0 +1,9 @@
+{
+  "name": "token-saver",
+  "version": "0.1.0",
+  "description": "Local, project-scoped Bash output compaction",
+  "author": {
+    "name": "Danilo Franco"
+  },
+  "license": "MIT"
+}

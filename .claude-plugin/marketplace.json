@@ -1,0 +1,13 @@
+{
+  "name": "danilo-tools",
+  "owner": {
+    "name": "Danilo Franco"
+  },
+  "plugins": [
+    {
+      "name": "token-saver",
+      "source": "./plugins/token-saver",
+      "description": "Project-scoped tool output compaction"
+    }
+  ]
+}
