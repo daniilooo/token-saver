@@ -1,122 +1,131 @@
-# Claude Token Saver
+# Token Saver
 
-Plugin do Claude Code para reduzir saídas extensas de Bash enviadas ao modelo. Ativação explícita por projeto, processamento local, sem chamadas a outra IA e sem dependências npm. Versão inicial **0.1.0**.
+[![CI](https://github.com/daniilooo/token-saver/actions/workflows/test.yml/badge.svg)](https://github.com/daniilooo/token-saver/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](package.json) [![Plugin candidate](https://img.shields.io/badge/plugin-0.1.1--candidate-blue)](plugins/token-saver/.claude-plugin/plugin.json)
 
-## Requisitos e compatibilidade
+> Leia em [Português (Brasil)](README.pt-BR.md).
 
-- Node.js 20 ou superior disponível como `node` no PATH do ambiente que executa os hooks.
-- Claude Code atualizado com suporte a `PostToolUse.updatedToolOutput` para ferramentas nativas. A documentação consultada em 08/10/2026 confirma esse contrato; não estabelecemos a versão mínima exata.
-- Linux, macOS ou Windows com o ambiente Bash suportado pelo Claude Code. PowerShell nativo não é interceptado nesta versão.
-- Git opcional para identificar a raiz do repositório; fora de Git, usa-se o diretório do projeto.
+Token Saver is a local Claude Code plugin that can replace long Bash tool output delivered to the model with a smaller, clearly labelled excerpt. Before replacement, it saves the exact tool response locally so you can recover the full output when it matters. It is enabled explicitly, per project.
 
-O pacote não inclui Node.js ou Claude Code. Sem um runtime compatível, não há economia. Os testes automatizados verificam o protocolo isoladamente; instalação e economia real precisam ser validadas no Claude Code do time.
+`0.1.1` is a release candidate prepared in this repository, not a published GitHub Release or a claim of runtime end-to-end validation.
 
-## Instalação pelo Git
+## Requirements
 
-Após publicar este repositório no seu Git, cada integrante executa, substituindo a URL:
+- Node.js 20 or later, available as `node` in the environment that runs Claude Code hooks.
+- Claude Code with support for `PostToolUse.updatedToolOutput`. This project has not established an exact minimum Claude Code version.
+- A Claude Code environment that runs Bash hooks. Native PowerShell output is not intercepted.
+- Git is optional; it is used only to find the project root. Without it, the current directory is used.
+
+The plugin has no npm dependencies and does not bundle Node.js or Claude Code.
+
+## Quick start
+
+These installation commands match the tracked marketplace and plugin identifiers. They still require a Claude Code pilot in your own environment.
 
 ```bash
 claude plugin marketplace add https://github.com/daniilooo/token-saver.git
 claude plugin install token-saver@danilo-tools
 ```
 
-Reinicie o Claude Code. Para testar o ZIP sem publicar, extraia-o e execute:
-
-```bash
-claude plugin validate /caminho/token-saver
-claude plugin validate /caminho/token-saver/plugins/token-saver
-claude plugin marketplace add /caminho/token-saver
-claude plugin install token-saver@danilo-tools
-```
-
-No Windows, use caminhos entre aspas se tiverem espaços. Não há `npm install`.
-
-## Ativar em um projeto
-
-Abra o projeto no Claude Code e execute:
+Restart Claude Code, open the project where you want it enabled, and run:
 
 ```text
 /token-saver:active
+/token-saver:status
 ```
 
-A skill executa o controle local, cria `.token-saver/config.json` e adiciona `/.token-saver/` ao `.gitignore` da raiz. Isso exclui configuração local, logs e estatísticas derivadas. A ativação persiste entre sessões nesta cópia do projeto, mas não é automaticamente compartilhada com outros clones. Cada integrante ativa onde desejar.
+Activation creates `.token-saver/config.json` in that project and adds `/.token-saver/` to that project's `.gitignore`. It is local to that clone; teammates choose whether to activate it in theirs.
 
-Para habilitar os atalhos sem prefixo, execute **no terminal do projeto**, usando o script da cópia baixada:
-
-```bash
-node /caminho/token-saver/plugins/token-saver/scripts/token-saver.cjs install-aliases
-```
-
-Reinicie o Claude Code e use:
+To turn it off while retaining existing logs:
 
 ```text
-/token-saver-active
-/token-saver-off
-/token-saver-stats
-/token-saver-status
+/token-saver:off
 ```
 
-Os atalhos são comandos de projeto que invocam as skills do plugin instalado. Podem ser commitados em `.claude/commands/` para todo o time. Não sobrescrevem comandos existentes. Sem instalar esses atalhos, os comandos oficiais são `/token-saver:active`, `/token-saver:off`, `/token-saver:stats` e `/token-saver:status`.
-
-## Como os tokens são economizados
-
-O Bash termina normalmente. O hook recebe o resultado, salva uma cópia fiel do `tool_response` em `.token-saver/logs/<id>.json` e devolve `updatedToolOutput` com um excerto menor. Quando o Claude Code aceita esse formato, o modelo recebe o excerto em lugar da saída extensa. Isso reduz o texto que pode entrar no contexto das próximas chamadas.
-
-Não é um `clear` do terminal, não apaga mensagens antigas e não recupera tokens já consumidos. O plugin não usa um LLM para resumir. Ele seleciona resultados, avisos, erros e linhas próximas, reduz repetições idênticas selecionadas e remove padrões de download/progresso. Nunca deduz sucesso pela ausência de erros: o resumo é explicitamente identificado como excerto.
-
-Exemplo: milhares de linhas de download seguidas por `BUILD FAILURE` e um erro de asserção passam a um excerto com o erro, o resultado e o caminho para o log. O Claude pode consultar esse arquivo quando precisar de detalhes. Ler o log integral também consome contexto.
-
-`stats` mede caracteres originais e compactados dos resultados realmente substituídos. **Não mede tokens faturados, limites da assinatura, cache ou economia financeira.** A redução do consumo total depende de quanto do contexto vinha de logs e de quanto detalhe precisará ser relido.
-
-## Ferramentas e limites
-
-Reconhece comandos de Java, JS/TS, Python, .NET, Go, Rust, PHP, Ruby, containers, Kubernetes, infraestrutura, cloud, Git e ferramentas de sistema. Nesta versão, o reconhecimento identifica o ecossistema; a seleção usa padrões compartilhados. Não existem ainda parsers semânticos individuais ou totais de testes calculados por stack.
-
-Saídas curtas passam intactas. Diffs, `git show/log`, consultas de banco, JSON válido e opções comuns de JSON também passam intactos. Outros formatos estruturados, comandos compostos e ferramentas desconhecidas exigem cuidado: um filtro heurístico pode omitir informação útil. Use o bypass para resultados que precisam de fidelidade integral.
-
-A cópia original é a saída disponibilizada ao hook pelo Claude Code. Se a ferramenta já tiver truncado o processo ou retornado um identificador de tarefa em background, o plugin não recupera os bytes ausentes. `PostToolUseFailure` e saídas assíncronas de `TaskOutput` não são reescritos nesta versão. Chamadas de Bash de subagentes recebem o mesmo hook quando aplicável ao projeto.
-
-## Configuração e bypass
-
-Edite `.token-saver/config.json`:
-
-```json
-{"enabled":true,"level":"aggressive","minChars":4000}
-```
-
-Orçamentos aproximados em caracteres do excerto: `normal` 12.000, `aggressive` 6.000, `extreme` 3.000, além do cabeçalho/caminho. São limites de texto, não tokenização exata. A ativação redefine a configuração para os padrões.
-
-Para ignorar a compactação de um Bash:
+To bypass compaction for one Bash command, put the marker in the command itself:
 
 ```bash
 TOKEN_SAVER=off mvn test
 ```
 
-O hook reconhece o marcador no comando; não precisa herdar a variável do processo filho. Também ignora leituras cujo comando contém `.token-saver/logs`. Para desligar persistentemente, use `/token-saver:off`. Não implementamos `raw-next` nesta versão.
+The hook recognizes that marker; it does not need to be inherited by a child process.
 
-## Logs e privacidade
+## What is preserved, and how to recover it
 
-Os arquivos preservam stdout, stderr e metadados presentes no retorno, além do comando. Podem conter credenciais ou dados pessoais. Permanecem locais; não há envio externo pelo plugin. `.gitignore` evita novas inclusões automáticas, mas não remove arquivos que já estejam rastreados. Antes de publicar, verifique `git ls-files .token-saver` e, se necessário, retire-os do índice com `git rm -r --cached .token-saver`.
+For an eligible long Bash result, the hook writes the original command and `tool_response` to `.token-saver/logs/<timestamp>-<uuid>.json` before returning an excerpt. The excerpt includes the exact path to that file. Read only the necessary part of the JSON when investigating: reading the whole original output also adds context.
 
-Arquivos usam identificadores únicos para suportar hooks simultâneos. Estatísticas são calculadas a partir dos arquivos, sem contador global concorrente. Não há retenção automática: remova logs antigos conforme a política do time, fora de execuções em andamento. Remover logs também remove suas estatísticas. Os modos de arquivo restringem acesso em sistemas POSIX; ACLs do Windows dependem do ambiente.
+When the configuration is absent or disabled, a response is malformed/interrupted/image data, logging fails, or the excerpt would not be shorter, the hook leaves the original response visible. It also passes through Git diff/show/log commands, database commands, JSON requests, valid JSON stdout, and explicit bypasses.
 
-Se configuração, schema ou gravação falhar, o hook não substitui o resultado. Se o excerto for maior que o original, também não substitui. Permissões de execução do Claude Code continuam sob controle dele.
+The plugin does not use an LLM to summarize. It selects result, warning, error, and nearby lines; reduces selected identical repetitions; and omits common download/progress patterns. The excerpt always says that status was not inferred. `stats` reports original and compacted characters for results that the hook actually replaced; it does not report billed tokens, subscription limits, cache use, or financial savings.
 
-## Desenvolvimento e publicação
+## Reproducible, sanitized example
+
+The following command exercises the current `compact` function with synthetic download noise and a failure. It contains no project data and does not measure an API bill:
+
+```bash
+node -e "const {compact}=require('./plugins/token-saver/scripts/token-saver.cjs'); const input='Downloading dependency\\n'.repeat(500)+'[ERROR] Expected 409 but was 200\\nBUILD FAILURE'; const output=compact('mvn test',input,'','aggressive'); console.log(JSON.stringify({originalChars:input.length,compactChars:output.length,output},null,2))"
+```
+
+In the recorded validation for this candidate, this input is reduced from 11,546 characters to 93 characters while retaining `Expected 409` and `BUILD FAILURE`. That is a character comparison for this synthetic input only. It is not a measurement of billed tokens, financial savings, cache use, subscription quota, or a guarantee of increased quota.
+
+## Limits
+
+- The Bash command still runs normally; Token Saver does not clear a terminal, restore already consumed context, or infer success from omitted lines.
+- Tool recognition identifies an ecosystem, but this version uses a shared heuristic rather than complete per-tool semantic parsers.
+- Short output is unchanged. The shared recognizer covers Java, JS/TS, Python, .NET, Go, Rust, PHP, Ruby, containers, Kubernetes, infrastructure, cloud, Git, and system tools; it does not claim complete parsers or test totals for every stack.
+- Unknown tools, compound commands, and non-JSON structured output can need the bypass when complete fidelity is important.
+- The hook sees only the response made available by Claude Code. It cannot restore output already truncated by the client or recover asynchronous `TaskOutput` / `PostToolUseFailure` results.
+- Automated tests cover the protocol in isolation. A Claude Code E2E pilot and platform-specific confirmation remain pending.
+
+## Privacy and local data
+
+The plugin makes no network calls at runtime. It invokes local `git rev-parse --show-toplevel` only to locate the project root. Original logs can contain command text, credentials, access tokens, personal data, or proprietary output; they are not redacted automatically. They are created locally with restrictive POSIX modes where supported, but Windows ACL behavior and backups are environment-dependent.
+
+Keep `.token-saver/` out of version control, remove logs according to your team's policy, and never attach unreviewed log files to an issue. See [SECURITY.md](SECURITY.md) for the attack surface and reporting status.
+
+Logs use unique names so concurrent hooks do not share a file. There is no automatic retention; deleting a log also removes it from later `stats` aggregation. `.gitignore` prevents new additions but does not untrack an existing file—check `git ls-files .token-saver` before publishing a project.
+
+## Configuration
+
+Activation writes this local default configuration (activating again resets it):
+
+```json
+{"enabled":true,"level":"aggressive","minChars":4000}
+```
+
+Approximate excerpt text budgets are 12,000 characters for `normal`, 6,000 for `aggressive`, and 3,000 for `extreme`, plus the header/path. They are character budgets, not exact tokenization. The hook also bypasses a command that reads `.token-saver/logs`; `raw-next` is not implemented.
+
+## Optional project aliases
+
+The official skill commands above need no aliases. To create project-local shortcut commands, from the target project run the script from your installed checkout:
+
+```bash
+node /path/to/token-saver/plugins/token-saver/scripts/token-saver.cjs install-aliases
+```
+
+Restart Claude Code, then use `/token-saver-active`, `/token-saver-off`, `/token-saver-stats`, or `/token-saver-status`. Existing commands are never overwritten. These aliases are created in `.claude/commands/` and may be committed only if that is your project's intended policy.
+
+## Development
 
 ```bash
 npm test
+npm run verify:manifests
+```
+
+If the Claude CLI is installed, the existing manual validation commands are:
+
+```bash
 claude plugin validate .
 claude plugin validate ./plugins/token-saver
 ```
 
-CI incluída para Linux, macOS e Windows, com Node 20/22/24. Veja [manual](docs/MANUAL.md), [arquitetura](docs/ARCHITECTURE.md) e [contribuição](CONTRIBUTING.md)
+For a manual Claude Code pilot, follow the [team manual](docs/MANUAL.md). Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Architecture is documented in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md); the versioned maintainer record lives in [docs/vault](docs/vault/00-Home.md).
 
-Licença MIT. Autor: Danilo Franco.
+## License
 
-## Referências oficiais
+[MIT](LICENSE) © 2026 Danilo Franco.
+
+## Official references
 
 - https://code.claude.com/docs/en/hooks
 - https://code.claude.com/docs/en/plugins-reference
 - https://code.claude.com/docs/en/plugin-marketplaces
-# token-saver

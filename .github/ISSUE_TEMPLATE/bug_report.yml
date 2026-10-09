@@ -1,0 +1,78 @@
+name: Bug report
+description: Report a reproducible Token Saver problem without sensitive output.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Remove credentials, tokens, private paths, customer data, and unredacted `.token-saver/logs` content. Do not use this public form for security vulnerabilities.
+  - type: input
+    id: claude_version
+    attributes:
+      label: Claude Code version
+      placeholder: e.g. 1.2.3
+    validations:
+      required: true
+  - type: input
+    id: node_version
+    attributes:
+      label: Node.js version
+      placeholder: e.g. v22.23.3
+    validations:
+      required: true
+  - type: input
+    id: plugin_version
+    attributes:
+      label: Token Saver plugin version
+      placeholder: e.g. 0.1.1
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Linux
+        - macOS
+        - Windows
+        - Other (describe below)
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Sanitized Bash command
+      description: Replace secrets and private paths with placeholders.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      placeholder: |
+        1. Activate Token Saver in a disposable project.
+        2. Run the sanitized command.
+        3. Observe the result.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: Include only sanitized excerpts; do not attach original logs.
+    validations:
+      required: true
+  - type: textarea
+    id: bypass_result
+    attributes:
+      label: Result with TOKEN_SAVER=off
+      description: State what changes when the same sanitized command is run with the bypass marker.
+    validations:
+      required: true
