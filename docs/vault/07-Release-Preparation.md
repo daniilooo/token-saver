@@ -15,6 +15,7 @@ Candidate `0.1.1`: documentation and repository polish only. Package and plugin 
 
 - [x] Baseline recorded: `8aff658f4ed19228ded89f265ac570bb49cde317`.
 - [x] `release` created from current `origin/main`; `feature/polish` created from `release`, both with upstreams.
+- [x] Conteúdo candidato validado no commit `790b48045bf49c1ee191120bc9649e3cf3575015` (`docs: prepare 0.1.1 polish release`).
 - [ ] Feature PR draft → `release` opened; record URL and delivered head SHA.
 - [ ] Observe green `test` workflow for that exact SHA (including the matrix); CI has not yet been observed remotely.
 - [ ] Perform and record Claude Code E2E pilot: activation, long output, relevant stderr/failure, bypass, disabled state, separate project, restart, and log-write failure.
@@ -23,7 +24,7 @@ Candidate `0.1.1`: documentation and repository polish only. Package and plugin 
 - [ ] Open `release` → `main`; promote with merge commit when supported; tag/publish only after final review.
 - [ ] Merge `main` back into `release` without rewriting history.
 
-The candidate SHA is intentionally the PR head or its reviewed squash commit, not a self-referential value embedded in this preparatory file. The exact SHA and test result are recorded in `IA_DEVELOPMENT_STATE.md` at the validation milestone.
+The release candidate SHA is ultimately the PR head or its reviewed squash commit. The validated content commit is recorded above; a later state-only commit may follow without changing the validated implementation. The exact delivered head and remote CI result must be recorded when the PR is opened.
 
 ## GitHub metadata proposal (not applied)
 
