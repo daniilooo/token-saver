@@ -1,5 +1,6 @@
 {
   "name": "danilo-tools",
+  "description": "Local Claude Code developer tools maintained by Danilo Franco.",
   "owner": {
     "name": "Danilo Franco"
   },

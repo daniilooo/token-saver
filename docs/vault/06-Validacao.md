@@ -14,6 +14,16 @@ A PR `#1` (`feature/polish` → `release`) e o push do SHA `69b938bd2ff1df4536d9
 
 Resultado da correção: o run da PR `37885675384` no SHA `afb6e7c1594dd74a382655519a0e9c73f2be5b4a` foi concluído com sucesso. `manifests` e todas as 9 combinações Node 20/22/24 × Linux/macOS/Windows passaram. O run de push correspondente `37885672487` também passou.
 
+## E2E Claude Code observada — Linux
+
+Em 2026-10-09, o candidato do `release` `4e26eae6689f80b80a7743ed5b5cfb2d7ad79916` foi carregado por sessão com `--plugin-dir` em um projeto temporário ativado. Ambiente: Ubuntu 24.04 (kernel `7.0.0-34-generic`), Node `v22.23.3`, Claude Code `2.1.296`. O carregamento por diretório foi necessário porque o marketplace de usuário acompanha `main` e a instalação persistente ainda é `0.1.0`; o candidato não foi promovido para atualizar artificialmente essa fonte.
+
+- Uma sessão executou uma saída sintética longa (500 linhas de download), com `console.error('fatal: synthetic e2e failure')` e `BUILD FAILURE`. O modelo recebeu `TOKEN SAVER — generic excerpt; status not inferred`, as duas linhas de falha e o caminho do log. O log único reteve o `tool_response` original com 11.542 caracteres e excerto de 215. O cliente retornou o texto de `console.error` consolidado em `stdout` (`stderr` vazio), portanto o comportamento de campo stderr separado não foi confirmado nesse cliente.
+- Em uma nova sessão, `TOKEN_SAVER=off` deixou visíveis as 200 linhas sintéticas e ambas as linhas de falha, sem cabeçalho ou caminho de log; a contagem de logs permaneceu 1.
+- Após `off`, uma terceira sessão também recebeu a saída original sem cabeçalho/caminho e a contagem de logs permaneceu 1. A configuração persistiu entre sessões até ser desativada.
+
+Este piloto confirma a integração principal em Linux, não uma matriz E2E completa: Windows/macOS, reinício da interface interativa, subagentes, `PostToolUseFailure` e falha real de escrita de log continuam fora da evidência E2E.
+
 ## Evidências exigidas
 
 | Validação | Evidência |

@@ -121,7 +121,7 @@ claude plugin validate .
 claude plugin validate ./plugins/token-saver
 ```
 
-CI incluída para Linux, macOS e Windows, com Node 20/22/24. Os testes automatizados cobrem o protocolo isolado; o piloto E2E do Claude Code e a confirmação por plataforma continuam pendentes. Veja [manual](docs/MANUAL.md), [arquitetura](docs/ARCHITECTURE.md), [contribuição](CONTRIBUTING.md) e [segurança](SECURITY.md).
+CI incluída para Linux, macOS e Windows, com Node 20/22/24. Os testes automatizados cobrem o protocolo isolado; um piloto E2E do Claude Code em Linux está registrado no vault, mas a confirmação por plataforma continua pendente. Veja [manual](docs/MANUAL.md), [arquitetura](docs/ARCHITECTURE.md), [contribuição](CONTRIBUTING.md) e [segurança](SECURITY.md).
 
 Licença MIT. Autor: Danilo Franco.
 
