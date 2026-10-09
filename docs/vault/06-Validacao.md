@@ -8,6 +8,10 @@ Validação de exemplo sanitizado: o comando em ambos os READMEs executou a fun�
 
 Validação de manifests: `npm run verify:manifests` passou para `token-saver 0.1.1; Node >=20`.
 
+## CI observada — correção pendente de confirmação
+
+A PR `#1` (`feature/polish` → `release`) e o push do SHA `69b938bd2ff1df4536d9ca7c0a754ae5c45b1bfe` tiveram 8 das 9 combinações da matriz aprovadas, além do job `manifests`. Apenas `windows-latest` / Node 20 falhou; os jobs macOS cancelados eram efeito do `fail-fast` padrão após essa falha. A causa é o glob `tests/*.test.cjs`: PowerShell não o expande e o test runner Node 20 não aceita glob de arquivo como as versões posteriores. A correção troca o script por `node --test`, cuja descoberta recursiva de `*.test.cjs` é documentada para Node 20, e define `fail-fast: false`. A nova CI deve ser observada antes de aprovar o candidato.
+
 ## Evidências exigidas
 
 | Validação | Evidência |
