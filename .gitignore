@@ -1,3 +1,9 @@
 node_modules/
-.token-saver/
+# Runtime state is local: its config can reveal local preferences and its logs can contain tool output.
+.token-saver/config.json
+.token-saver/logs/
+# Obsidian UI state is machine-local; Markdown notes in docs/vault remain versioned.
+docs/vault/.obsidian/workspace*.json
+docs/vault/.obsidian/cache/
+docs/vault/.obsidian/trash/
 *.zip
