@@ -14,6 +14,6 @@
 - [x] CI cobre o novo fluxo e preserva a matriz existente.
 - [x] Metadata proposta/comandos pendentes documentados.
 - [x] Testes e validações finais concluídos, limitações registradas; CI remota/E2E continuam pendentes.
-- [ ] Commit criado e feature pronta para push/PR draft; abertura da PR e CI remota pendentes.
+- [x] Commits criados e `feature/polish` publicada; PR draft e CI remota pendentes por indisponibilidade de `gh`/browser.
 
 Runtime e algoritmo permanecem fora do escopo. Primeira release preparada não significa publicada.
