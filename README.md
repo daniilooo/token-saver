@@ -74,7 +74,7 @@ In the recorded validation for this candidate, this input is reduced from 11,546
 - Short output is unchanged. The shared recognizer covers Java, JS/TS, Python, .NET, Go, Rust, PHP, Ruby, containers, Kubernetes, infrastructure, cloud, Git, and system tools; it does not claim complete parsers or test totals for every stack.
 - Unknown tools, compound commands, and non-JSON structured output can need the bypass when complete fidelity is important.
 - The hook sees only the response made available by Claude Code. It cannot restore output already truncated by the client or recover asynchronous `TaskOutput` / `PostToolUseFailure` results.
-- Automated tests cover the protocol in isolation. A Claude Code E2E pilot and platform-specific confirmation remain pending.
+- Automated tests cover the protocol in isolation. A Linux Claude Code E2E pilot is recorded in the maintainer vault; platform-specific confirmation remains pending.
 
 ## Privacy and local data
 
