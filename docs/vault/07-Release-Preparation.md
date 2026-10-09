@@ -17,7 +17,7 @@ Candidate `0.1.1`: documentation and repository polish only. Package and plugin 
 - [x] `release` created from current `origin/main`; `feature/polish` created from `release`, both with upstreams.
 - [x] Conteúdo candidato validado no commit `790b48045bf49c1ee191120bc9649e3cf3575015` (`docs: prepare 0.1.1 polish release`).
 - [x] Feature PR `#1` → `release` aberta para o head `69b938bd2ff1df4536d9ca7c0a754ae5c45b1bfe`: https://github.com/daniilooo/token-saver/pull/1
-- [ ] Observe green `test` workflow for the correction de CI e seu SHA entregue (including the matrix); o run anterior expôs a falha Windows/Node 20 documentada em `06-Validacao`.
+- [x] Run da PR `37885675384` verde para `afb6e7c1594dd74a382655519a0e9c73f2be5b4a`: manifests e matriz completa aprovados. https://github.com/daniilooo/token-saver/actions/runs/37885675384
 - [ ] Perform and record Claude Code E2E pilot: activation, long output, relevant stderr/failure, bypass, disabled state, separate project, restart, and log-write failure.
 - [ ] Confirm/enable private vulnerability reporting and approve repository rulesets.
 - [ ] Squash-merge the reviewed feature PR into `release`; validate its post-squash SHA.

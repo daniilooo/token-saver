@@ -13,7 +13,7 @@
 - [x] Changelog, manifests e candidato 0.1.1 consistentes.
 - [x] CI cobre o novo fluxo e preserva a matriz existente.
 - [x] Metadata proposta/comandos pendentes documentados.
-- [x] Testes e validações finais concluídos, limitações registradas; CI remota/E2E continuam pendentes.
-- [x] Commits criados e `feature/polish` publicada; PR draft e CI remota pendentes por indisponibilidade de `gh`/browser.
+- [x] Testes e validações finais concluídos, limitações registradas; CI remota verde; E2E Claude continua pendente.
+- [x] Commits criados, `feature/polish` publicada e PR #1 aberta para `release`.
 
 Runtime e algoritmo permanecem fora do escopo. Primeira release preparada não significa publicada.

@@ -10,7 +10,9 @@ Validação de manifests: `npm run verify:manifests` passou para `token-saver 0.
 
 ## CI observada — correção pendente de confirmação
 
-A PR `#1` (`feature/polish` → `release`) e o push do SHA `69b938bd2ff1df4536d9ca7c0a754ae5c45b1bfe` tiveram 8 das 9 combinações da matriz aprovadas, além do job `manifests`. Apenas `windows-latest` / Node 20 falhou; os jobs macOS cancelados eram efeito do `fail-fast` padrão após essa falha. A causa é o glob `tests/*.test.cjs`: PowerShell não o expande e o test runner Node 20 não aceita glob de arquivo como as versões posteriores. A correção troca o script por `node --test`, cuja descoberta recursiva de `*.test.cjs` é documentada para Node 20, e define `fail-fast: false`. A nova CI deve ser observada antes de aprovar o candidato.
+A PR `#1` (`feature/polish` → `release`) e o push do SHA `69b938bd2ff1df4536d9ca7c0a754ae5c45b1bfe` tiveram 8 das 9 combinações da matriz aprovadas, além do job `manifests`. Apenas `windows-latest` / Node 20 falhou; os jobs macOS cancelados eram efeito do `fail-fast` padrão após essa falha. A causa é o glob `tests/*.test.cjs`: PowerShell não o expande e o test runner Node 20 não aceita glob de arquivo como as versões posteriores. A correção troca o script por `node --test`, cuja descoberta recursiva de `*.test.cjs` é documentada para Node 20, e define `fail-fast: false`.
+
+Resultado da correção: o run da PR `37885675384` no SHA `afb6e7c1594dd74a382655519a0e9c73f2be5b4a` foi concluído com sucesso. `manifests` e todas as 9 combinações Node 20/22/24 × Linux/macOS/Windows passaram. O run de push correspondente `37885672487` também passou.
 
 ## Evidências exigidas
 
