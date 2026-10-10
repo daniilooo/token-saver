@@ -4,7 +4,9 @@
 
 Do not disclose a vulnerability, exploit, credentials, tokens, private logs, or unredacted tool output in a public GitHub issue.
 
-Private vulnerability reporting has **not been confirmed as enabled** for this repository. No private email address is published for this project. The maintainer must enable GitHub's private vulnerability reporting before a public release and then replace this paragraph with the verified private-reporting URL. Until that is done, there is no verified private reporting channel for this repository.
+GitHub Private Vulnerability Reporting is enabled for this repository. Use **Report a vulnerability** from the repository's Security and quality / Advisories area to submit a private report to the maintainers. Do not open a public issue for a vulnerability or attach unreviewed logs there. Include only the minimum sensitive material needed to reproduce and assess the report.
+
+GitHub notifies maintainers according to their repository and security-alert notification preferences. No separate private email address is published for this project.
 
 ## Attack surface
 
@@ -25,4 +27,4 @@ Logs are exact diagnostic material, not redacted exports. They can contain secre
 - Inspect a minimal, relevant JSON portion when recovering output.
 - Keep `.token-saver/config.json` and `.token-saver/logs/` ignored. If a project has already tracked them, remove them from its index deliberately; do not assume `.gitignore` retroactively untracks files.
 
-This policy describes the published `0.1.1` release. A Linux Claude Code E2E pilot and active repository rulesets are recorded in the maintainer vault. Private vulnerability reporting remains unconfirmed; see the reporting section above and issue [#6](https://github.com/daniilooo/token-saver/issues/6).
+This policy describes the published `0.1.1` release. A Linux Claude Code E2E pilot, active repository rulesets, and the enabled private-reporting channel are recorded in the maintainer vault.
