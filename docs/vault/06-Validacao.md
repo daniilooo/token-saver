@@ -8,7 +8,7 @@ Validação de exemplo sanitizado: o comando em ambos os READMEs executou a fun�
 
 Validação de manifests: `npm run verify:manifests` passou para `token-saver 0.1.1; Node >=20`.
 
-## CI observada — correção pendente de confirmação
+## CI observada — correção confirmada
 
 A PR `#1` (`feature/polish` → `release`) e o push do SHA `69b938bd2ff1df4536d9ca7c0a754ae5c45b1bfe` tiveram 8 das 9 combinações da matriz aprovadas, além do job `manifests`. Apenas `windows-latest` / Node 20 falhou; os jobs macOS cancelados eram efeito do `fail-fast` padrão após essa falha. A causa é o glob `tests/*.test.cjs`: PowerShell não o expande e o test runner Node 20 não aceita glob de arquivo como as versões posteriores. A correção troca o script por `node --test`, cuja descoberta recursiva de `*.test.cjs` é documentada para Node 20, e define `fail-fast: false`.
 
@@ -16,7 +16,7 @@ Resultado da correção: o run da PR `37885675384` no SHA `afb6e7c1594dd74a38265
 
 ## E2E Claude Code observada — Linux
 
-Em 2026-10-09, o candidato do `release` `4e26eae6689f80b80a7743ed5b5cfb2d7ad79916` foi carregado por sessão com `--plugin-dir` em um projeto temporário ativado. Ambiente: Ubuntu 24.04 (kernel `7.0.0-34-generic`), Node `v22.23.3`, Claude Code `2.1.296`. O carregamento por diretório foi necessário porque o marketplace de usuário acompanha `main` e a instalação persistente ainda é `0.1.0`; o candidato não foi promovido para atualizar artificialmente essa fonte.
+Em 2026-10-09, o conteúdo então em `release` `4e26eae6689f80b80a7743ed5b5cfb2d7ad79916` foi carregado por sessão com `--plugin-dir` em um projeto temporário ativado. Ambiente: Ubuntu 24.04 (kernel `7.0.0-34-generic`), Node `v22.23.3`, Claude Code `2.1.296`. Esse conteúdo foi posteriormente promovido para a release `v0.1.1`.
 
 - Uma sessão executou uma saída sintética longa (500 linhas de download), com `console.error('fatal: synthetic e2e failure')` e `BUILD FAILURE`. O modelo recebeu `TOKEN SAVER — generic excerpt; status not inferred`, as duas linhas de falha e o caminho do log. O log único reteve o `tool_response` original com 11.542 caracteres e excerto de 215. O cliente retornou o texto de `console.error` consolidado em `stdout` (`stderr` vazio), portanto o comportamento de campo stderr separado não foi confirmado nesse cliente.
 - Em uma nova sessão, `TOKEN_SAVER=off` deixou visíveis as 200 linhas sintéticas e ambas as linhas de falha, sem cabeçalho ou caminho de log; a contagem de logs permaneceu 1.
@@ -34,6 +34,17 @@ Este piloto confirma a integração principal em Linux, não uma matriz E2E comp
 | Versões | manifests e tags inspecionados |
 | Docs | links locais e equivalência EN/PT-BR |
 | Exemplo de redução | entrada sanitizada, comando e contagens |
-| Release | checklist e SHA, publicação ainda pendente |
+| Release | tag `v0.1.1`, GitHub Release e SHA promovido |
 
 E2E Claude futuro: ativação, bypass, saída extensa, erros relevantes/stderr, subagente, reinício, isolamento de projeto e falha de gravação; registrar versão Claude e SO. Não marcar como aprovado sem executar.
+
+## Smoke test de distribuição — Docker
+
+Em 2026-10-09, a imagem ausente `node:22-bookworm-slim` foi baixada com digest `sha256:c3de60bf2f9dd0ac6370e6117950ff62d6e339527e7472301c9c78a017978392` e usada em um contêiner descartável. O teste clonou a tag pública `v0.1.1` no SHA `d9b020b40dd71338db94e218efaa19c618274517`; usou Node `v22.23.3`, npm `10.9.9` e Claude Code `2.1.296`.
+
+- `npm test`: 6/6 aprovados; `npm run verify:manifests`: aprovado.
+- `claude plugin validate .` e `claude plugin validate ./plugins/token-saver`: aprovados.
+- Marketplace local do checkout da tag e `token-saver@danilo-tools` instalaram com sucesso; o cliente reportou versão `0.1.1` habilitada.
+- Projeto sintético: ativação, compactação de 11.546 para 207 caracteres, preservação de `Expected 409` e `BUILD FAILURE`, criação de um log e bypass `TOKEN_SAVER=off` sem log adicional passaram.
+
+O contêiner foi removido e a imagem permaneceu somente como cache local. Isso valida o pacote publicado e o fluxo de instalação sem credenciais, mas não substitui a matriz E2E da issue [#5](https://github.com/daniilooo/token-saver/issues/5).

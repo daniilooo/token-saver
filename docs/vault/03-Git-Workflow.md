@@ -11,13 +11,13 @@ Sem push direto em main, force push ou reset destrutivo. Feature usa squash ao i
 
 Proteções são objetivo operacional; verificar configuração e permissões antes de declarar que existem. CODEOWNERS não substitui ruleset. Não exigir revisão inviável para mantenedor único.
 
-Nesta execução: branches, commits, push da feature e PR draft autorizados; merge/tag/publicação ficam para revisão final. `release` foi criada de `origin/main` no SHA `8aff658f4ed19228ded89f265ac570bb49cde317`; `feature/polish` parte de `release`.
+`release` foi criada de `origin/main` no SHA `8aff658f4ed19228ded89f265ac570bb49cde317`; `feature/polish` partiu de `release`. A `v0.1.1` foi publicada a partir do merge em `main` `d9b020b40dd71338db94e218efaa19c618274517`, e `main` foi sincronizada de volta em `release` sem reescrita de histórico.
 
-## Proposta administrativa pendente de aprovação
+## Proteções administrativas ativas
 
-Não houve evidência autenticada de rulesets nesta execução. Para aprovação do mantenedor, propor no GitHub:
+Em 2026-10-09, a API autenticada confirmou e criou as rulesets ativas:
 
-- `main`: aceitar pull requests apenas de `release`; exigir o workflow `test` (manifests e matriz), bloquear force push e exclusão; não exigir aprovação adicional enquanto o repositório tiver mantenedor único.
-- `release`: aceitar pull requests de `feature/*`; exigir o mesmo workflow, bloquear force push e exclusão; não configurar revisão obrigatória inviável para mantenedor único.
+- [`Protect main`](https://github.com/daniilooo/token-saver/rules/24823257): PR obrigatório, `manifests` e nove checks de matriz obrigatórios e atualizados, bloqueio de force-push e exclusão, zero aprovações requeridas.
+- [`Protect release`](https://github.com/daniilooo/token-saver/rules/24823258): mesmas exigências para a branch de integração.
 
-Confirmar a capacidade de restringir a origem da branch no ruleset escolhido antes de alegar que ela é aplicada. `CODEOWNERS` documenta proprietário, mas não ativa revisão obrigatória.
+Rulesets nativos não restringem a branch de origem do PR. O guard de CI para permitir apenas `release` → `main`, `feature/*` → `release` e a sincronização `main` → `release` é a pendência [#4](https://github.com/daniilooo/token-saver/issues/4). `CODEOWNERS` documenta proprietário, mas não ativa revisão obrigatória.

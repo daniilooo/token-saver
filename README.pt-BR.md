@@ -1,10 +1,10 @@
 # Token Saver
 
-[![CI](https://github.com/daniilooo/token-saver/actions/workflows/test.yml/badge.svg)](https://github.com/daniilooo/token-saver/actions/workflows/test.yml) [![Licença: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](package.json) [![Candidato do plugin](https://img.shields.io/badge/plugin-0.1.1--candidate-blue)](plugins/token-saver/.claude-plugin/plugin.json)
+[![CI](https://github.com/daniilooo/token-saver/actions/workflows/test.yml/badge.svg)](https://github.com/daniilooo/token-saver/actions/workflows/test.yml) [![Licença: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](package.json) [![Versão do plugin](https://img.shields.io/badge/plugin-0.1.1-blue)](https://github.com/daniilooo/token-saver/releases/tag/v0.1.1)
 
 > Read this in [English](README.md).
 
-Plugin do Claude Code para reduzir saídas extensas de Bash enviadas ao modelo. Ativação explícita por projeto, processamento local, sem chamadas a outra IA e sem dependências npm. `0.1.1` é um candidato de release preparado neste repositório; não é uma GitHub Release publicada nem alegação de validação ponta a ponta em runtime.
+Plugin do Claude Code para reduzir saídas extensas de Bash enviadas ao modelo. Ativação explícita por projeto, processamento local, sem chamadas a outra IA e sem dependências npm. [`0.1.1`](https://github.com/daniilooo/token-saver/releases/tag/v0.1.1) é a release publicada atual. Testes automatizados e um piloto do Claude Code em Linux estão registrados no vault de manutenção; isso não é uma alegação de validação ponta a ponta em todas as plataformas ou cenários.
 
 ## Requisitos e compatibilidade
 
@@ -74,7 +74,7 @@ Exemplo sanitizado e reproduzível (não mede cobrança de API):
 node -e "const {compact}=require('./plugins/token-saver/scripts/token-saver.cjs'); const input='Downloading dependency\\n'.repeat(500)+'[ERROR] Expected 409 but was 200\\nBUILD FAILURE'; const output=compact('mvn test',input,'','aggressive'); console.log(JSON.stringify({originalChars:input.length,compactChars:output.length,output},null,2))"
 ```
 
-Na validação registrada deste candidato, essa entrada foi reduzida de 11.546 para 93 caracteres e preservou `Expected 409` e `BUILD FAILURE`. Isso compara caracteres dessa entrada sintética; não mede tokens faturados, economia financeira, cache, quota de assinatura nem garante aumento de quota. O Claude pode consultar o arquivo de log indicado quando precisar de detalhes; ler o log integral também consome contexto.
+Na validação registrada desta release, essa entrada foi reduzida de 11.546 para 93 caracteres e preservou `Expected 409` e `BUILD FAILURE`. Isso compara caracteres dessa entrada sintética; não mede tokens faturados, economia financeira, cache, quota de assinatura nem garante aumento de quota. O Claude pode consultar o arquivo de log indicado quando precisar de detalhes; ler o log integral também consome contexto.
 
 `stats` mede caracteres originais e compactados dos resultados realmente substituídos. **Não mede tokens faturados, limites da assinatura, cache ou economia financeira.** A redução do consumo total depende de quanto do contexto vinha de logs e de quanto detalhe precisará ser relido.
 
