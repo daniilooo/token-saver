@@ -20,4 +20,4 @@ Em 2026-10-09, a API autenticada confirmou e criou as rulesets ativas:
 - [`Protect main`](https://github.com/daniilooo/token-saver/rules/24823257): PR obrigatório, `manifests` e nove checks de matriz obrigatórios e atualizados, bloqueio de force-push e exclusão, zero aprovações requeridas.
 - [`Protect release`](https://github.com/daniilooo/token-saver/rules/24823258): mesmas exigências para a branch de integração.
 
-Rulesets nativos não restringem a branch de origem do PR. O guard de CI para permitir apenas `release` → `main`, `feature/*` → `release` e a sincronização `main` → `release` é a pendência [#4](https://github.com/daniilooo/token-saver/issues/4). `CODEOWNERS` documenta proprietário, mas não ativa revisão obrigatória.
+Rulesets nativos não restringem a branch de origem do PR. O check obrigatório `branch-flow`, integrado na PR [#8](https://github.com/daniilooo/token-saver/pull/8), faz essa validação: permite apenas `release` → `main`, `feature/*` → `release` e a sincronização `main` → `release`. `CODEOWNERS` documenta proprietário, mas não ativa revisão obrigatória.
