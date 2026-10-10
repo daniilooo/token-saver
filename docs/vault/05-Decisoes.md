@@ -22,4 +22,4 @@ Sem tags remotas ou locais e com ambos os manifests em `0.1.0`, o próximo patch
 
 ## ADR-006 — Segurança e administração com evidência autenticada
 
-Com `gh` autenticado, as rulesets `Protect main` e `Protect release` foram criadas ativas. Não há evidência de private vulnerability reporting ativo; em vez de inventar uma caixa de e-mail, `SECURITY.md` mantém orientação para não usar issues públicas para relatos sensíveis e a confirmação ficou na issue [#6](https://github.com/daniilooo/token-saver/issues/6).
+Com `gh` autenticado, as rulesets `Protect main` e `Protect release` foram criadas ativas. Em 2026-10-10, a API confirmou `private-vulnerability-reporting: enabled`; `SECURITY.md` orienta o uso do canal privado nativo e continua proibindo relatos e logs sensíveis em issues públicas. Não foi inventado e-mail de segurança.
