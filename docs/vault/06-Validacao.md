@@ -48,3 +48,15 @@ Em 2026-10-09, a imagem ausente `node:22-bookworm-slim` foi baixada com digest `
 - Projeto sintético: ativação, compactação de 11.546 para 207 caracteres, preservação de `Expected 409` e `BUILD FAILURE`, criação de um log e bypass `TOKEN_SAVER=off` sem log adicional passaram.
 
 O contêiner foi removido e a imagem permaneceu somente como cache local. Isso valida o pacote publicado e o fluxo de instalação sem credenciais, mas não substitui a matriz E2E da issue [#5](https://github.com/daniilooo/token-saver/issues/5).
+
+## E2E expandido — Linux (issue #5)
+
+Em 2026-10-10, o marketplace `danilo-tools` atualizou a instalação de usuário de `token-saver` `0.1.0` para `0.1.1`; o CLI confirmou o plugin habilitado e a versão Claude Code `2.1.296`. Em dois projetos Git temporários, no Ubuntu 24.04 (kernel `7.0.0-34-generic`) e Node `v22.23.3`, sessões novas do Claude Code executaram apenas comandos `node -e` sintéticos autorizados de forma restrita.
+
+- A skill `/token-saver:active` ativou o projeto. Uma nova sessão confirmou a configuração persistida: uma saída de 500 linhas de download recebeu `TOKEN SAVER — generic excerpt; status not inferred`, preservou `Expected 409` e `BUILD FAILURE`, e indicou o log local.
+- Um processo de saída `1` com `fatal: synthetic PostToolUseFailure test` retornou `Exit code 1`, preservou a falha e não recebeu `TOKEN SAVER` ou caminho de log. Isso confirma o fail-open esperado para esse evento nesse cliente.
+- Com `.token-saver/logs` ocupado deliberadamente por um arquivo regular vazio, a saída longa começou por `Downloading dependency`, preservou `BUILD FAILURE` e não recebeu cabeçalho ou caminho de log. É uma falha de escrita real no hook, observada sem apagar logs anteriores.
+- Um subagente chamado pela ferramenta `Task` executou o Bash sintético; seu resultado recebeu o cabeçalho, `SUBAGENT BUILD FAILURE` e o caminho do log. O projeto registrou três compactações, `34.608` caracteres originais e `639` compactados; essa é apenas medição de caracteres.
+- Em um comando de sucesso com marcador em `console.error`, o modelo recebeu o marcador e o cabeçalho, mas o log mais recente registrou `stderrChars: 0` e o marcador em `stdout`. Portanto este cliente ainda consolidou stderr em stdout; campos separados não foram observados.
+
+O teste usou sessões novas `--print`, não o reinício da interface TUI interativa. Não há macOS disponível neste ambiente. Existe uma VM Windows desligada (`VCDS-WIN`) aparentemente destinada a outro uso; ela não foi iniciada sem autorização específica. Windows, macOS e reinício TUI continuam pendentes na issue [#5](https://github.com/daniilooo/token-saver/issues/5).

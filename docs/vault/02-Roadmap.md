@@ -16,5 +16,5 @@ Retenção deve preservar diagnóstico e ter limites explícitos. Redação de s
 ## Issues pós-release
 
 - [#4 — Enforce the release branch flow with a required CI guard](https://github.com/daniilooo/token-saver/issues/4) — implementada e exigida pelas rulesets.
-- [#5 — Expand Claude Code E2E evidence beyond the Linux pilot](https://github.com/daniilooo/token-saver/issues/5)
+- [#5 — Expand Claude Code E2E evidence beyond the Linux pilot](https://github.com/daniilooo/token-saver/issues/5) — Linux ampliado; macOS, Windows e reinício TUI continuam pendentes.
 - [#6 — Confirm a private vulnerability-reporting channel](https://github.com/daniilooo/token-saver/issues/6) — habilitada e verificada pela API em 2026-10-10.
