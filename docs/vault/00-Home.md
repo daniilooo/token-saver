@@ -13,4 +13,4 @@ Vault de desenvolvimento versionado. Abra esta pasta no Obsidian.
 
 Repositório: https://github.com/daniilooo/token-saver
 
-Estado: baseline e implementação de polish em andamento na `feature/polish`.
+Estado: `v0.1.1` publicada; regras de branch ativas e roadmap pós-release aberto. Veja [[IA_DEVELOPMENT_STATE]].

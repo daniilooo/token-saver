@@ -1,12 +1,12 @@
 # Token Saver
 
-[![CI](https://github.com/daniilooo/token-saver/actions/workflows/test.yml/badge.svg)](https://github.com/daniilooo/token-saver/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](package.json) [![Plugin candidate](https://img.shields.io/badge/plugin-0.1.1--candidate-blue)](plugins/token-saver/.claude-plugin/plugin.json)
+[![CI](https://github.com/daniilooo/token-saver/actions/workflows/test.yml/badge.svg)](https://github.com/daniilooo/token-saver/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Node.js >= 20](https://img.shields.io/badge/node-%3E%3D20-339933?logo=nodedotjs&logoColor=white)](package.json) [![Plugin version](https://img.shields.io/badge/plugin-0.1.1-blue)](https://github.com/daniilooo/token-saver/releases/tag/v0.1.1)
 
 > Leia em [Português (Brasil)](README.pt-BR.md).
 
 Token Saver is a local Claude Code plugin that can replace long Bash tool output delivered to the model with a smaller, clearly labelled excerpt. Before replacement, it saves the exact tool response locally so you can recover the full output when it matters. It is enabled explicitly, per project.
 
-`0.1.1` is a release candidate prepared in this repository, not a published GitHub Release or a claim of runtime end-to-end validation.
+[`0.1.1`](https://github.com/daniilooo/token-saver/releases/tag/v0.1.1) is the current published release. Automated tests and a Linux Claude Code pilot are recorded in the maintainer vault; they are not a claim of end-to-end validation on every platform or scenario.
 
 ## Requirements
 
@@ -65,7 +65,7 @@ The following command exercises the current `compact` function with synthetic do
 node -e "const {compact}=require('./plugins/token-saver/scripts/token-saver.cjs'); const input='Downloading dependency\\n'.repeat(500)+'[ERROR] Expected 409 but was 200\\nBUILD FAILURE'; const output=compact('mvn test',input,'','aggressive'); console.log(JSON.stringify({originalChars:input.length,compactChars:output.length,output},null,2))"
 ```
 
-In the recorded validation for this candidate, this input is reduced from 11,546 characters to 93 characters while retaining `Expected 409` and `BUILD FAILURE`. That is a character comparison for this synthetic input only. It is not a measurement of billed tokens, financial savings, cache use, subscription quota, or a guarantee of increased quota.
+In the recorded validation for this release, this input is reduced from 11,546 characters to 93 characters while retaining `Expected 409` and `BUILD FAILURE`. That is a character comparison for this synthetic input only. It is not a measurement of billed tokens, financial savings, cache use, subscription quota, or a guarantee of increased quota.
 
 ## Limits
 

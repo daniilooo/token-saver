@@ -25,4 +25,4 @@ Logs are exact diagnostic material, not redacted exports. They can contain secre
 - Inspect a minimal, relevant JSON portion when recovering output.
 - Keep `.token-saver/config.json` and `.token-saver/logs/` ignored. If a project has already tracked them, remove them from its index deliberately; do not assume `.gitignore` retroactively untracks files.
 
-This policy describes the code inspected for the `0.1.1` candidate. A Claude Code E2E pilot, security-reporting enablement, and repository ruleset approval remain release gates.
+This policy describes the published `0.1.1` release. A Linux Claude Code E2E pilot and active repository rulesets are recorded in the maintainer vault. Private vulnerability reporting remains unconfirmed; see the reporting section above and issue [#6](https://github.com/daniilooo/token-saver/issues/6).

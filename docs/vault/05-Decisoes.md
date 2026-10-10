@@ -16,10 +16,10 @@ Decisão do usuário: iniciar pelo acabamento profissional. Adaptação semânti
 
 A análise anterior orienta investigação. Compatibilidade, segurança, percentuais, branches e releases exigem evidência atual.
 
-## ADR-005 — Candidato 0.1.1
+## ADR-005 — Release 0.1.1
 
-Sem tags remotas ou locais e com ambos os manifests em `0.1.0`, o próximo patch compatível é `0.1.1`. O número identifica um candidato preparado, não uma release publicada. A promoção só ocorre após PR, CI observada no SHA entregue e piloto E2E registrado.
+Sem tags remotas ou locais e com ambos os manifests em `0.1.0`, o próximo patch compatível foi `0.1.1`. Após PRs, CI observada e piloto E2E Linux, a versão foi promovida e publicada na tag `v0.1.1`, que aponta para `d9b020b40dd71338db94e218efaa19c618274517`.
 
-## ADR-006 — Segurança e administração sem evidência autenticada
+## ADR-006 — Segurança e administração com evidência autenticada
 
-O ambiente não tinha `gh` disponível para confirmar private vulnerability reporting, metadata ou rulesets. Em vez de inventar uma caixa de e-mail, `SECURITY.md` registra que não há canal privado confirmado e exige habilitação antes da publicação. As configurações propostas ficam no vault para aprovação explícita; não são declaradas ativas.
+Com `gh` autenticado, as rulesets `Protect main` e `Protect release` foram criadas ativas. Não há evidência de private vulnerability reporting ativo; em vez de inventar uma caixa de e-mail, `SECURITY.md` mantém orientação para não usar issues públicas para relatos sensíveis e a confirmação ficou na issue [#6](https://github.com/daniilooo/token-saver/issues/6).

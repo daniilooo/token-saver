@@ -2,18 +2,16 @@
 
 Atualizado: 2026-10-09.
 
-Fase: `release` integrada, CI verde e piloto E2E Linux aprovado; aguarda revisão final de release.
+Fase: `v0.1.1` publicada; governança de branches ativa; documentação pós-release em `feature/post-release-operations` para PR contra `release`.
 
 Repositório: https://github.com/daniilooo/token-saver
-Branch atual: `feature/e2e-validation`, origem `release`, para versionar a evidência do piloto e o ajuste do manifesto. `release` foi criada de `origin/main` no SHA baseline `8aff658f4ed19228ded89f265ac570bb49cde317` e contém o squash `4e26eae6689f80b80a7743ed5b5cfb2d7ad79916` da PR #1.
-SHA baseline: `8aff658f4ed19228ded89f265ac570bb49cde317` (`Update README.md.`, 2026-10-08T15:32:08-03:00).
-Mudanças aplicadas: READMEs EN/PT-BR, SECURITY, CONTRIBUTING, CHANGELOG, AGENTS, templates, CODEOWNERS, CI, verificador de manifests, ignore preciso e notas de release. Runtime do plugin não foi modificado.
-SHA de conteúdo candidato: `790b48045bf49c1ee191120bc9649e3cf3575015` (`docs: prepare 0.1.1 polish release`). A publicação da feature foi confirmada no head `eb8234aa15257eb9e809891373206064a0a5141c` (`docs: record polish validation`); este próximo registro de estado não altera a implementação validada.
-Testes locais: baseline e final `npm test` passaram (6/6) com Node v22.23.3/npm 11.8.0; `npm run verify:manifests` passou para versão 0.1.1; YAML do workflow/formulários passou em PyYAML; 15 arquivos Markdown tiveram links locais válidos; exemplo sanitizado confirmou 11.546 → 93 caracteres e retenção das duas linhas de falha.
-Decisões: candidato 0.1.1 permitido pois manifests/tags estavam em 0.1.0/nenhuma tag; segurança privada/rulesets/metadata não foram confirmados porque `gh` não está disponível, portanto somente proposta documentada. O marketplace persistente continua em `0.1.0` porque acompanha `main`; o candidato `release` foi validado isoladamente por `--plugin-dir` sem promoção prematura.
-PR #1 foi integrada por squash em `release`; CI pós-merge `37885997403` passou. O piloto E2E Linux passou com Claude Code 2.1.296 e está registrado em `06-Validacao`.
-Pendências: integrar esta evidência/descrição em `release`, aprovações administrativas de private reporting/rulesets/metadata, e depois PR `release` → `main`; não há evidência E2E completa em Windows/macOS, subagentes ou falha de escrita.
+Branch atual: `feature/post-release-operations`, criada de `origin/release` no SHA `aac42331a28ffb1d759bfacd05ee9a17ce01c2a2`. O commit de documentação `6787e5ee7b379221602001a96611bd7bc495b93b` foi enviado e está na PR draft [#7](https://github.com/daniilooo/token-saver/pull/7) para `release`. O diretório local também contém `.obsidian/` não rastreado, preservado e fora desta mudança.
+SHA baseline: `8aff658f4ed19228ded89f265ac570bb49cde317` (`main`, 2026-10-08).
+Release: PR [#3](https://github.com/daniilooo/token-saver/pull/3) promoveu `release` para `main` por merge commit `d9b020b40dd71338db94e218efaa19c618274517`; a tag anotada e a GitHub Release `v0.1.1` foram publicadas. `main` retornou a `release` pelo merge `aac42331a28ffb1d759bfacd05ee9a17ce01c2a2`, sem reescrita de histórico.
+Validações observadas: CI de `main` `38005816142` e sincronização `38006024107` verdes; piloto Claude Code Linux com 2.1.296 registrado em `06-Validacao`; smoke Docker da tag pública passou em Node 22.23.3/npm 10.9.9 e Claude Code 2.1.296 (testes 6/6, manifests, validações dos manifests, marketplace, instalação, ativação, compactação, log e bypass). A PR #7 observou verde no commit `6787e5e` nos runs de push `38008412704` e PR `38008437626`, ambos com `manifests` e matriz completa.
+Administração: rulesets ativas `Protect main` (ID 24823257) e `Protect release` (ID 24823258), ambas exigindo PR, os nove checks de matriz e `manifests`, branch atualizada, sem force-push/exclusão e sem aprovação adicional. Rulesets não restringem a origem do PR; isso está rastreado na issue [#4](https://github.com/daniilooo/token-saver/issues/4).
+Pendências: [#4](https://github.com/daniilooo/token-saver/issues/4) guard de origem de PR; [#5](https://github.com/daniilooo/token-saver/issues/5) matriz E2E e cenários pendentes; [#6](https://github.com/daniilooo/token-saver/issues/6) canal privado de vulnerabilidades. Metadata GitHub continua apenas proposta; não foi aplicada.
 
-Próximo passo: validar, publicar e integrar `feature/e2e-validation` em `release`; então abrir a PR `release` → `main` somente após a revisão final. Não criar tag ou publicação nesta execução.
+Próximo passo: a CI do commit de estado atual deve passar na PR #7; então revisar a PR e removê-la de draft antes do merge por squash em `release`. Depois tratar a issue #4 antes da próxima promoção.
 
 Ao atualizar: registrar fase, branch/SHAs, alterações, validações e limitações, decisões, bloqueios e próximo comando. Ler somente notas relevantes para economizar contexto.
