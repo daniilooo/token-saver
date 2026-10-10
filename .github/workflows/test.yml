@@ -9,6 +9,26 @@ permissions:
   contents: read
 
 jobs:
+  branch-flow:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce the branch flow
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          HEAD_REF: ${{ github.head_ref }}
+        shell: bash
+        run: |
+          case "$BASE_REF:$HEAD_REF" in
+            main:release|release:feature/*|release:main)
+              echo "Allowed pull request flow: $HEAD_REF -> $BASE_REF"
+              ;;
+            *)
+              echo "::error title=Invalid pull request flow::Allowed: release -> main; feature/* -> release; main -> release (synchronization). Received: $HEAD_REF -> $BASE_REF"
+              exit 1
+              ;;
+          esac
+
   manifests:
     runs-on: ubuntu-latest
     steps:
